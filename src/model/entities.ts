@@ -14,14 +14,14 @@ export type SoldProduct = {
   id: number;
   _idProduct: number;
   _idSaleInvoice: number;
-  _idUnit: number;
+  quantity: number;
 };
 
 export type PurchasedProduct = {
   id: number;
   _idProduct: number;
   _idSaleInvoice: number;
-  _idUnit: number;
+  quantity: number;
 };
 
 export type Unit = {
@@ -32,7 +32,8 @@ export type Unit = {
 export type ProviderInvoice = {
   id: number;
   _idProvider: number;
-  date: Date;
+  emissionDate: Date;
+  expirationDate: Date;
   total: number;
 };
 
@@ -48,7 +49,8 @@ export type SaleInvoice = {
   NIT: string;
   _idEmployee: number;
   _idCashRegister: number;
-  date: Date;
+  emissionDate: Date;
+  expirationDate: Date;
   total: number;
 };
 

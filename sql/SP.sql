@@ -189,50 +189,6 @@ DELIMITER ;
 # --------------------------------------------------------
 # --------------------------------------------------------
 DELIMITER $$
-DROP PROCEDURE IF EXISTS `getUnit`;
-CREATE PROCEDURE `getUnit`(IN `unit_id` INT)
-BEGIN
-    SELECT * FROM `unidadproducto` WHERE `idunidad` = unit_id;
-END $$
-DELIMITER ;
-# --------------------------------------------------------
-DELIMITER $$
-DROP PROCEDURE IF EXISTS `getAllUnits`;
-CREATE PROCEDURE `getAllUnits`()
-BEGIN
-    SELECT * FROM `unidadproducto`;
-END $$
-DELIMITER ;
-# --------------------------------------------------------
-DELIMITER $$
-DROP PROCEDURE IF EXISTS `createUnit`;
-CREATE PROCEDURE `createUnit`(IN `_productId` VARCHAR(50))
-BEGIN
-    INSERT INTO `unidadproducto` (`_idproducto`)
-    VALUES (_productid);
-END $$
-DELIMITER ;
-# --------------------------------------------------------
-DELIMITER $$
-DROP PROCEDURE IF EXISTS `updateUnit`;
-CREATE PROCEDURE `updateUnit`(IN `unit_id` INT, IN `_productId` VARCHAR(50))
-BEGIN
-    UPDATE `unidadproducto`
-    SET `_idproducto` = _productid
-    WHERE `idunidad` = unit_id;
-END $$
-DELIMITER ;
-# --------------------------------------------------------
-DELIMITER $$
-DROP PROCEDURE IF EXISTS `deleteUnit`;
-CREATE PROCEDURE `deleteUnit`(IN `unit_id` INT)
-BEGIN
-    DELETE FROM `unidadproducto` WHERE `idunidad` = unit_id;
-END $$
-DELIMITER ;
-# --------------------------------------------------------
-# --------------------------------------------------------
-DELIMITER $$
 DROP PROCEDURE IF EXISTS `getSoldProducts`;
 CREATE PROCEDURE `getSoldProducts`(IN `soldProduct_id` INT)
 BEGIN
@@ -250,22 +206,22 @@ DELIMITER ;
 # --------------------------------------------------------
 DELIMITER $$
 DROP PROCEDURE IF EXISTS `createSoldProduct`;
-CREATE PROCEDURE `createSoldProduct`(IN `_productId` INT, IN `_invoiceId` INT, IN `_unitId` INT)
+CREATE PROCEDURE `createSoldProduct`(IN `_productId` INT, IN `_invoiceId` INT, IN `quantity` INT)
 BEGIN
-    INSERT INTO `productosvendidos` (`_idproducto`, `_idfacturaventa`, `_idunidad`)
-    VALUES (_productid, _invoiceid, _unitid);
+    INSERT INTO `productosvendidos` (`_idproducto`, `_idfacturaventa`, `cantidad`)
+    VALUES (_productid, _invoiceid, quantity);
 END $$
 DELIMITER ;
 # --------------------------------------------------------
 DELIMITER $$
 DROP PROCEDURE IF EXISTS `updateSoldProduct`;
 CREATE PROCEDURE `updateSoldProduct`(IN `soldProduct_id` INT, IN `_productId` INT, IN `_invoiceId` INT,
-                                     IN `_unitId` INT)
+                                     IN `quantity` INT)
 BEGIN
     UPDATE `productosvendidos`
     SET `_idproducto`     = _productid,
         `_idfacturaventa` = _invoiceid,
-        `_idunidad`       = _unitid
+        `cantidad`        = quantity
     WHERE `idtransaccion` = soldproduct_id;
 END $$
 DELIMITER ;
@@ -297,22 +253,22 @@ DELIMITER ;
 # --------------------------------------------------------
 DELIMITER $$
 DROP PROCEDURE IF EXISTS `createPurchasedProduct`;
-CREATE PROCEDURE `createPurchasedProduct`(IN `_productId` INT, IN `_invoiceId` INT, IN `_unitId` INT)
+CREATE PROCEDURE `createPurchasedProduct`(IN `_productId` INT, IN `_invoiceId` INT, IN `quantity` INT)
 BEGIN
-    INSERT INTO `productoscomprados` (`_idproducto`, `_idfacturacompra`, `_idunidad`)
-    VALUES (_productid, _invoiceid, _unitid);
+    INSERT INTO `productoscomprados` (`_idproducto`, `_idfacturacompra`, `cantidad`)
+    VALUES (_productid, _invoiceid, quantity);
 END $$
 DELIMITER ;
 # --------------------------------------------------------
 DELIMITER $$
 DROP PROCEDURE IF EXISTS `updatePurchasedProduct`;
 CREATE PROCEDURE `updatePurchasedProduct`(IN `boughtProduct_id` INT, IN `_productId` INT, IN `_invoiceId` INT,
-                                          IN `_unitId` INT)
+                                          IN `quantity` INT)
 BEGIN
     UPDATE `productoscomprados`
     SET `_idproducto`      = _productid,
         `_idfacturacompra` = _invoiceid,
-        `_idunidad`        = _unitid
+        `cantidad`         = quantity
     WHERE `idtransaccion` = boughtproduct_id;
 END $$
 DELIMITER ;
@@ -345,22 +301,25 @@ DELIMITER ;
 DELIMITER $$
 DROP PROCEDURE IF EXISTS `createProviderInvoice`;
 CREATE PROCEDURE `createProviderInvoice`(IN `_providerId` INT, IN `invoiceDate` DATETIME,
+                                         IN `invoiceDateExpiration` DATETIME,
                                          IN `invoiceTotal` DECIMAL(10, 2))
 BEGIN
-    INSERT INTO `facturaproveedores` (`_idproveedor`, `fecha`, `total`)
-    VALUES (_providerid, invoicedate, invoicetotal);
+    INSERT INTO `facturaproveedores` (`_idproveedor`, `fechaemision`, fechavencimiento, `total`)
+    VALUES (_providerid, invoicedate, invoicedateexpiration, invoicetotal);
 END $$
 DELIMITER ;
 # --------------------------------------------------------
 DELIMITER $$
 DROP PROCEDURE IF EXISTS `updateProviderInvoice`;
 CREATE PROCEDURE `updateProviderInvoice`(IN `invoice_id` INT, IN `_providerId` INT, IN `invoiceDate` DATETIME,
+                                         IN `invoiceDateExpiration` DATETIME,
                                          IN `invoiceTotal` DECIMAL(10, 2))
 BEGIN
     UPDATE `facturaproveedores`
-    SET `_idproveedor` = _providerid,
-        `fecha`        = invoicedate,
-        `total`        = invoicetotal
+    SET `_idproveedor`     = _providerid,
+        `fechaemision`     = invoicedate,
+        `fechavencimiento` = invoicedateexpiration,
+        `total`            = invoicetotal
     WHERE `idfactura` = invoice_id;
 END $$
 DELIMITER ;
@@ -396,10 +355,11 @@ DELIMITER $$
 DROP PROCEDURE IF EXISTS `createInvoiceClient`;
 DROP PROCEDURE IF EXISTS `createSaleInvoice`;
 CREATE PROCEDURE `createSaleInvoice`(IN `_clientId` VARCHAR(50), IN `_employeeId` INT, IN `_cashRegisterId` INT,
-                                     IN `invoiceDate` DATETIME, IN `invoiceTotal` DECIMAL(10, 2))
+                                     IN `invoiceDate` DATETIME, IN invoicedateexpiration DATETIME,
+                                     IN `invoiceTotal` DECIMAL(10, 2))
 BEGIN
-    INSERT INTO `facturasventa` (`NIT`, `_idempleado`, `fecha`, `_idcaja`, `total`)
-    VALUES (_clientid, _employeeid, invoicedate, _cashregisterid, invoicetotal);
+    INSERT INTO `facturasventa` (`NIT`, `_idempleado`, `fechaemision`, fechavencimiento, `_idcaja`, `total`)
+    VALUES (_clientid, _employeeid, invoicedate, invoicedateexpiration, _cashregisterid, invoicetotal);
 END $$
 DELIMITER ;
 # --------------------------------------------------------
@@ -408,14 +368,16 @@ DROP PROCEDURE IF EXISTS `updateInvoiceClient`;
 DROP PROCEDURE IF EXISTS `updateSaleInvoice`;
 CREATE PROCEDURE `updateSaleInvoice`(IN `invoice_id` INT, IN `_clientId` VARCHAR(50), IN `_employeeId` INT,
                                      IN `_cashRegisterId` INT, IN `invoiceDate` DATETIME,
+                                     IN invoicedateexpiration DATETIME,
                                      IN `invoiceTotal` DECIMAL(10, 2))
 BEGIN
     UPDATE `facturasventa`
-    SET `NIT`         = _clientid,
-        `_idempleado` = _employeeid,
-        `fecha`       = invoicedate,
-        `_idcaja`     = _cashregisterid,
-        `total`       = invoicetotal
+    SET `NIT`              = _clientid,
+        `_idempleado`      = _employeeid,
+        `fechaemision`     = invoicedate,
+        `fechavencimiento` = invoicedateexpiration,
+        `_idcaja`          = _cashregisterid,
+        `total`            = invoicetotal
     WHERE `idfacturaventa` = invoice_id;
 END $$
 DELIMITER ;

@@ -4,8 +4,8 @@ import { SaleInvoice } from "../model/entities";
 class SaleInvoiceController extends Dao<SaleInvoice> {
   constructor() {
     super(
-      "createSaleInvoice(?, ?, ?, ?, ?)",
-      "updateSaleInvoice(?, ?, ?, ?, ?, ?)",
+      "createSaleInvoice(?, ?, ?, ?, ?, ?)",
+      "updateSaleInvoice(?, ?, ?, ?, ?, ?, ?)",
       "deleteSaleInvoice(?)",
       "getSaleInvoice(?)",
       "getAllSaleInvoices()"
@@ -17,7 +17,8 @@ class SaleInvoiceController extends Dao<SaleInvoice> {
       resource.NIT,
       resource._idEmployee,
       resource._idCashRegister,
-      resource.date,
+      resource.emissionDate,
+      resource.expirationDate,
       resource.total,
     ];
   }

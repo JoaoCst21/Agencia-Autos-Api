@@ -13,7 +13,7 @@ class SoldProductController extends Dao<SoldProduct> {
   }
 
   procedureParams(resource: SoldProduct): any[] {
-    return [resource._idProduct, resource._idSaleInvoice, resource._idUnit];
+    return [resource._idProduct, resource._idSaleInvoice, resource.quantity];
   }
 }
 

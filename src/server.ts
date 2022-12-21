@@ -10,7 +10,6 @@ import providerInvoiceController from "./controller/providerInvoice.controller";
 import saleInvoiceController from "./controller/saleInvoice.controller";
 import purchasedProductController from "./controller/purchasedProduct.controller";
 import soldProductController from "./controller/soldProduct.controller";
-import unitController from "./controller/unit.controller";
 
 const app = express();
 const PORT = 3000 || process.env.PORT;
@@ -36,7 +35,6 @@ router.use("/providerInvoice", routeFactory(providerInvoiceController));
 router.use("/saleInvoice", routeFactory(saleInvoiceController));
 router.use("/purchasedProduct", routeFactory(purchasedProductController));
 router.use("/soldProduct", routeFactory(soldProductController));
-router.use("/unit", routeFactory(unitController));
 
 app.listen(PORT, () => {
   console.log("Server started on port 3000");

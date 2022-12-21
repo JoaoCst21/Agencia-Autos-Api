@@ -1,6 +1,9 @@
-DROP DATABASE IF EXISTS walmart;
-CREATE DATABASE IF NOT EXISTS walmart;
-USE walmart;
+DROP
+    DATABASE IF EXISTS walmart;
+CREATE
+    DATABASE IF NOT EXISTS walmart;
+USE
+    walmart;
 
 CREATE TABLE `Empleados`
 (
@@ -8,7 +11,7 @@ CREATE TABLE `Empleados`
     `salarioEmpleado`  INT,
     `nombreEmpleado`   VARCHAR(50),
     `apellidoEmpleado` VARCHAR(50),
-    `telefonoEmpleado` BIGINT,
+    `telefonoEmpleado` INT,
     `_idCaja`          INT             NOT NULL
 );
 
@@ -21,15 +24,9 @@ CREATE TABLE `Cajas`
 CREATE TABLE `Productos`
 (
     `idProducto`     INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    `nombreProducto` VARCHAR(50)     NOT NULL,
-    `precioProducto` DECIMAL(10, 2)  NOT NULL,
+    `nombreProducto` VARCHAR(50),
+    `precioProducto` DECIMAL(10, 2),
     `_idCategoria`   INT             NOT NULL
-);
-
-CREATE TABLE `UnidadProducto`
-(
-    `idUnidad`    INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    `_idProducto` INT
 );
 
 CREATE TABLE `Categorias`
@@ -40,12 +37,13 @@ CREATE TABLE `Categorias`
 
 CREATE TABLE `FacturasVenta`
 (
-    `idFacturaVenta` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    `NIT`            VARCHAR(50)     NOT NULL,
-    `_idEmpleado`    INT             NOT NULL,
-    `_idCaja`        INT             NOT NULL,
-    `fecha`          DATETIME        NOT NULL,
-    `total`          DECIMAL(10, 2)  NOT NULL
+    `idFacturaVenta`   INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    `NIT`              VARCHAR(50)     NOT NULL,
+    `_idEmpleado`      INT             NOT NULL,
+    `_idCaja`          INT             NOT NULL,
+    `fechaEmision`     DATETIME        NOT NULL,
+    `fechaVencimiento` DATETIME        NOT NULL,
+    `total`            DECIMAL(10, 2)
 );
 
 CREATE TABLE `ProductosVendidos`
@@ -53,7 +51,7 @@ CREATE TABLE `ProductosVendidos`
     `idTransaccion`   INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     `_idProducto`     INT,
     `_idFacturaVenta` INT,
-    `_idUnidad`       INT
+    `cantidad`        INT             NOT NULL
 );
 
 CREATE TABLE `Proveedores`
@@ -66,10 +64,11 @@ CREATE TABLE `Proveedores`
 
 CREATE TABLE `FacturaProveedores`
 (
-    `idFactura`    INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    `_idProveedor` INT             NOT NULL,
-    `fecha`        DATETIME        NOT NULL,
-    `total`        DECIMAL(10, 2)  NOT NULL
+    `idFactura`        INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    `_idProveedor`     INT             NOT NULL,
+    `fechaEmision`     DATETIME        NOT NULL,
+    `fechaVencimiento` DATETIME        NOT NULL,
+    `total`            DECIMAL(10, 2)  NOT NULL
 );
 
 CREATE TABLE `ProductosComprados`
@@ -77,7 +76,7 @@ CREATE TABLE `ProductosComprados`
     `idTransaccion`    INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     `_idProducto`      INT             NOT NULL,
     `_idFacturaCompra` INT             NOT NULL,
-    `_idUnidad`        INT             NOT NULL
+    `cantidad`         INT             NOT NULL
 );
 
 CREATE TABLE `Clientes`
@@ -104,25 +103,16 @@ ALTER TABLE `ProductosVendidos`
     ADD FOREIGN KEY (`_idProducto`) REFERENCES `Productos` (`idProducto`);
 
 ALTER TABLE `ProductosVendidos`
-    ADD FOREIGN KEY (`_idUnidad`) REFERENCES `UnidadProducto` (`idUnidad`);
-
-ALTER TABLE `ProductosVendidos`
     ADD FOREIGN KEY (`_idFacturaVenta`) REFERENCES `FacturasVenta` (`idFacturaVenta`);
 
 ALTER TABLE `FacturasVenta`
     ADD FOREIGN KEY (`NIT`) REFERENCES `Clientes` (`NIT`);
-
-ALTER TABLE `UnidadProducto`
-    ADD FOREIGN KEY (`_idProducto`) REFERENCES `Productos` (`idProducto`);
 
 ALTER TABLE `ProductosComprados`
     ADD FOREIGN KEY (`_idProducto`) REFERENCES `Productos` (`idProducto`);
 
 ALTER TABLE `ProductosComprados`
     ADD FOREIGN KEY (`_idFacturaCompra`) REFERENCES `FacturaProveedores` (`idFactura`);
-
-ALTER TABLE `ProductosComprados`
-    ADD FOREIGN KEY (`_idUnidad`) REFERENCES `UnidadProducto` (`idUnidad`);
 
 ALTER TABLE `FacturaProveedores`
     ADD FOREIGN KEY (`_idProveedor`) REFERENCES `Proveedores` (`idProveedor`);

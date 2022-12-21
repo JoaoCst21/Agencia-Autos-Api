@@ -4,8 +4,8 @@ import Dao from "../dao/Dao";
 class ProviderInvoiceController extends Dao<ProviderInvoice> {
   constructor() {
     super(
-      "createProviderInvoice(?, ?, ?)",
-      "updateProviderInvoice(?, ?, ?, ?)",
+      "createProviderInvoice(?, ?, ?, ?)",
+      "updateProviderInvoice(?, ?, ?, ?, ?)",
       "deleteProviderInvoice(?)",
       "getProviderInvoice(?)",
       "getAllProviderInvoices()"
@@ -13,7 +13,12 @@ class ProviderInvoiceController extends Dao<ProviderInvoice> {
   }
 
   procedureParams(resource: ProviderInvoice): any[] {
-    return [resource._idProvider, resource.date, resource.total];
+    return [
+      resource._idProvider,
+      resource.emissionDate,
+      resource.expirationDate,
+      resource.total,
+    ];
   }
 }
 
