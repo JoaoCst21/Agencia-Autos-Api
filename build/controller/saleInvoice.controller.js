@@ -19,14 +19,15 @@ var Dao_1 = require("../dao/Dao");
 var SaleInvoiceController = /** @class */ (function (_super) {
     __extends(SaleInvoiceController, _super);
     function SaleInvoiceController() {
-        return _super.call(this, "createSaleInvoice(?, ?, ?, ?, ?)", "updateSaleInvoice(?, ?, ?, ?, ?, ?)", "deleteSaleInvoice(?)", "getSaleInvoice(?)", "getAllSaleInvoices()") || this;
+        return _super.call(this, "createSaleInvoice(?, ?, ?, ?, ?, ?)", "updateSaleInvoice(?, ?, ?, ?, ?, ?, ?)", "deleteSaleInvoice(?)", "getSaleInvoice(?)", "getAllSaleInvoices()") || this;
     }
     SaleInvoiceController.prototype.procedureParams = function (resource) {
         return [
             resource.NIT,
             resource._idEmployee,
             resource._idCashRegister,
-            resource.date,
+            resource.emissionDate,
+            resource.expirationDate,
             resource.total,
         ];
     };

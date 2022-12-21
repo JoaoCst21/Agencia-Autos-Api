@@ -2,7 +2,7 @@ import { connection } from "./Connection";
 import { Request as RequestObj, Response } from "express";
 import { FieldPacket, RowDataPacket } from "mysql2";
 
-type Request<T> = RequestObj & { body: T };
+export type Request<T> = RequestObj & { body: T };
 
 interface Crud<Model> {
   create(req: Request<Model>, res: Response): Promise<void>;

@@ -19,10 +19,15 @@ var Dao_1 = require("../dao/Dao");
 var ProviderInvoiceController = /** @class */ (function (_super) {
     __extends(ProviderInvoiceController, _super);
     function ProviderInvoiceController() {
-        return _super.call(this, "createProviderInvoice(?, ?, ?)", "updateProviderInvoice(?, ?, ?, ?)", "deleteProviderInvoice(?)", "getProviderInvoice(?)", "getAllProviderInvoices()") || this;
+        return _super.call(this, "createProviderInvoice(?, ?, ?, ?)", "updateProviderInvoice(?, ?, ?, ?, ?)", "deleteProviderInvoice(?)", "getProviderInvoice(?)", "getAllProviderInvoices()") || this;
     }
     ProviderInvoiceController.prototype.procedureParams = function (resource) {
-        return [resource._idProvider, resource.date, resource.total];
+        return [
+            resource._idProvider,
+            resource.emissionDate,
+            resource.expirationDate,
+            resource.total,
+        ];
     };
     return ProviderInvoiceController;
 }(Dao_1.default));

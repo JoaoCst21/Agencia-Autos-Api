@@ -93,7 +93,7 @@ DELIMITER ;
 # --------------------------------------------------------
 DELIMITER $$
 DROP PROCEDURE IF EXISTS `getClient`;
-CREATE PROCEDURE `getClient`(IN `client_id` INT)
+CREATE PROCEDURE `getClient`(IN `client_id` VARCHAR(50))
 BEGIN
     SELECT * FROM `clientes` WHERE `NIT` = client_id;
 END $$
@@ -109,17 +109,17 @@ DELIMITER ;
 # --------------------------------------------------------
 DELIMITER $$
 DROP PROCEDURE IF EXISTS `createClient`;
-CREATE PROCEDURE `createClient`(IN `client_name` VARCHAR(50), IN `client_lastName` VARCHAR(50),
+CREATE PROCEDURE `createClient`(IN client_id VARCHAR(50), IN `client_name` VARCHAR(50), IN `client_lastName` VARCHAR(50),
                                 IN `client_address` VARCHAR(50))
 BEGIN
-    INSERT INTO `clientes` (`nombres`, `apellidos`, `direccion`)
-    VALUES (client_name, client_lastname, client_address);
+    INSERT INTO `clientes` (nit, `nombres`, `apellidos`, `direccion`)
+    VALUES (client_id, client_name, client_lastname, client_address);
 END $$
 DELIMITER ;
 # --------------------------------------------------------
 DELIMITER $$
 DROP PROCEDURE IF EXISTS `updateClient`;
-CREATE PROCEDURE `updateClient`(IN `client_id` INT, IN `client_name` VARCHAR(50), IN `client_lastName` VARCHAR(50),
+CREATE PROCEDURE `updateClient`(IN `client_id` VARCHAR(50), IN `client_name` VARCHAR(50), IN `client_lastName` VARCHAR(50),
                                 IN `client_address` VARCHAR(50))
 BEGIN
     UPDATE `clientes`
@@ -132,7 +132,7 @@ DELIMITER ;
 # --------------------------------------------------------
 DELIMITER $$
 DROP PROCEDURE IF EXISTS `deleteClient`;
-CREATE PROCEDURE `deleteClient`(IN `client_id` INT)
+CREATE PROCEDURE `deleteClient`(IN `client_id` VARCHAR(50))
 BEGIN
     DELETE FROM `clientes` WHERE `NIT` = client_id;
 END $$

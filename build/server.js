@@ -12,7 +12,6 @@ var providerInvoice_controller_1 = require("./controller/providerInvoice.control
 var saleInvoice_controller_1 = require("./controller/saleInvoice.controller");
 var purchasedProduct_controller_1 = require("./controller/purchasedProduct.controller");
 var soldProduct_controller_1 = require("./controller/soldProduct.controller");
-var unit_controller_1 = require("./controller/unit.controller");
 var app = express();
 var PORT = 3000 || process.env.PORT;
 app.get("/", function (req, res) {
@@ -33,7 +32,6 @@ router.use("/providerInvoice", (0, routeFactory_1.routeFactory)(providerInvoice_
 router.use("/saleInvoice", (0, routeFactory_1.routeFactory)(saleInvoice_controller_1.default));
 router.use("/purchasedProduct", (0, routeFactory_1.routeFactory)(purchasedProduct_controller_1.default));
 router.use("/soldProduct", (0, routeFactory_1.routeFactory)(soldProduct_controller_1.default));
-router.use("/unit", (0, routeFactory_1.routeFactory)(unit_controller_1.default));
 app.listen(PORT, function () {
     console.log("Server started on port 3000");
 });

@@ -22,7 +22,7 @@ var PurchasedProductController = /** @class */ (function (_super) {
         return _super.call(this, "createPurchasedProduct(?, ?, ?)", "updatePurchasedProduct(?, ?, ?, ?)", "delePurchasedProduct(?)", "getPurchasedProduct(?)", "getAllPurchasedProducts()") || this;
     }
     PurchasedProductController.prototype.procedureParams = function (resource) {
-        return [resource._idProduct, resource._idSaleInvoice, resource._idUnit];
+        return [resource._idProduct, resource._idSaleInvoice, resource.quantity];
     };
     return PurchasedProductController;
 }(Dao_1.default));
