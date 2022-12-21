@@ -4,11 +4,11 @@ import Dao from "../dao/Dao";
 class PurchasedProductController extends Dao<PurchasedProduct> {
   constructor() {
     super(
-      "createProviderInvoice(?, ?, ?)",
-      "updateProviderInvoice(?, ?, ?, ?)",
-      "deleteProviderInvoice(?)",
-      "getProviderInvoice(?)",
-      "getAllProviderInvoices()"
+      "createPurchasedProduct(?, ?, ?)",
+      "updatePurchasedProduct(?, ?, ?, ?)",
+      "delePurchasedProduct(?)",
+      "getPurchasedProduct(?)",
+      "getAllPurchasedProducts()"
     );
   }
 

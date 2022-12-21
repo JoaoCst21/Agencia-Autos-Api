@@ -19,7 +19,7 @@ var Dao_1 = require("../dao/Dao");
 var PurchasedProductController = /** @class */ (function (_super) {
     __extends(PurchasedProductController, _super);
     function PurchasedProductController() {
-        return _super.call(this, "createProviderInvoice(?, ?, ?)", "updateProviderInvoice(?, ?, ?, ?)", "deleteProviderInvoice(?)", "getProviderInvoice(?)", "getAllProviderInvoices()") || this;
+        return _super.call(this, "createPurchasedProduct(?, ?, ?)", "updatePurchasedProduct(?, ?, ?, ?)", "delePurchasedProduct(?)", "getPurchasedProduct(?)", "getAllPurchasedProducts()") || this;
     }
     PurchasedProductController.prototype.procedureParams = function (resource) {
         return [resource._idProduct, resource._idSaleInvoice, resource._idUnit];

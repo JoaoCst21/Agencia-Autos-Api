@@ -280,24 +280,24 @@ DELIMITER ;
 # --------------------------------------------------------
 # --------------------------------------------------------
 DELIMITER $$
-DROP PROCEDURE IF EXISTS `getBoughtProducts`;
-CREATE PROCEDURE `getBoughtProducts`(IN `boughtProduct_id` INT)
+DROP PROCEDURE IF EXISTS `getPurchasedProduct`;
+CREATE PROCEDURE `getPurchasedProduct`(IN `boughtProduct_id` INT)
 BEGIN
     SELECT * FROM `productoscomprados` WHERE `idtransaccion` = boughtproduct_id;
 END $$
 DELIMITER ;
 # --------------------------------------------------------
 DELIMITER $$
-DROP PROCEDURE IF EXISTS `getAllBoughtProducts`;
-CREATE PROCEDURE `getAllBoughtProducts`()
+DROP PROCEDURE IF EXISTS `getAllPurchasedProducts`;
+CREATE PROCEDURE `getAllPurchasedProducts`()
 BEGIN
     SELECT * FROM `productoscomprados`;
 END $$
 DELIMITER ;
 # --------------------------------------------------------
 DELIMITER $$
-DROP PROCEDURE IF EXISTS `createBoughtProduct`;
-CREATE PROCEDURE `createBoughtProduct`(IN `_productId` INT, IN `_invoiceId` INT, IN `_unitId` INT)
+DROP PROCEDURE IF EXISTS `createPurchasedProduct`;
+CREATE PROCEDURE `createPurchasedProduct`(IN `_productId` INT, IN `_invoiceId` INT, IN `_unitId` INT)
 BEGIN
     INSERT INTO `productoscomprados` (`_idproducto`, `_idfacturacompra`, `_idunidad`)
     VALUES (_productid, _invoiceid, _unitid);
@@ -305,9 +305,9 @@ END $$
 DELIMITER ;
 # --------------------------------------------------------
 DELIMITER $$
-DROP PROCEDURE IF EXISTS `updateBoughtProduct`;
-CREATE PROCEDURE `updateBoughtProduct`(IN `boughtProduct_id` INT, IN `_productId` INT, IN `_invoiceId` INT,
-                                       IN `_unitId` INT)
+DROP PROCEDURE IF EXISTS `updatePurchasedProduct`;
+CREATE PROCEDURE `updatePurchasedProduct`(IN `boughtProduct_id` INT, IN `_productId` INT, IN `_invoiceId` INT,
+                                          IN `_unitId` INT)
 BEGIN
     UPDATE `productoscomprados`
     SET `_idproducto`      = _productid,
@@ -318,8 +318,8 @@ END $$
 DELIMITER ;
 # --------------------------------------------------------
 DELIMITER $$
-DROP PROCEDURE IF EXISTS `deleteBoughtProduct`;
-CREATE PROCEDURE `deleteBoughtProduct`(IN `boughtProduct_id` INT)
+DROP PROCEDURE IF EXISTS `deletePurchasedProduct`;
+CREATE PROCEDURE `deletePurchasedProduct`(IN `boughtProduct_id` INT)
 BEGIN
     DELETE FROM `productoscomprados` WHERE `idtransaccion` = boughtproduct_id;
 END $$
